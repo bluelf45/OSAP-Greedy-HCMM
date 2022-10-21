@@ -1,24 +1,6 @@
 #include <bits/stdc++.h> // importa todo
+#include "Functions/Functions.h"
 using namespace std ;
-struct Entidad{
-    int id;
-    int group_id;
-    int space;
-};
-struct Room{
-    int id;
-    int floor;
-    int capacity;
-    int tam_LA;
-    vector<int> Adjacent;
-};
-struct Constraint{
-    int id;
-    int Type;
-    int Soft_Hard;
-    int Param1;
-    int Param2;
-};
 
 int main () {
     // Aumenta la velocidad del cout y del cin
@@ -27,8 +9,8 @@ int main () {
     cout . setf ( ios :: fixed ) ;
     //Apertura del texto de Instancia con los datos
     fstream Instancia;
-    string NombreInstancia = "s100_v100.txt";
-    Instancia.open(NombreInstancia, ios::in);
+    string NombreInstancia = "s100_v100";//Sin el.txt
+    Instancia.open(NombreInstancia + ".txt", ios::in);
     if(Instancia.is_open()){
         cout << ">>>Instancia Abierta<<<\n";
     }else{
@@ -37,13 +19,14 @@ int main () {
     }
     string Linea;
     vector <int> Cantidades; //Entidades | Rooms | Floors | Constraints | Hard Constraints | Soft Constraints
-    vector <Entidad> Entidades; // Array de Entidades
-    vector <Room> Rooms; // Array de Habitaciones
-    vector <Constraint> Constraints;
+    vector <Entidad> Entidades; // Vector de Entidades
+    vector <Room> Rooms; // Vector de Habitaciones
+    vector <Constraint> Constraints;//Vector de Restricciones
     int Type = 0; // 0 = Cantidades | 1 = Entidades | 2 = Habitaciones | 3 = Restricciones
     Entidad temp;
     Room tempRoom;
     Constraint tempCons;
+    //Lectura y Almacenamiento del Problema
     while(getline(Instancia, Linea)){
         //Separate String by spaces
         stringstream ss(Linea);
@@ -79,7 +62,7 @@ int main () {
                     tempRoom.capacity = stoi(tokens[2]);
                     tempRoom.tam_LA = stoi(tokens[3]);
                 }
-                for( int i = 4; i < tokens.size(); i++){
+                for( long unsigned int i = 4; i < tokens.size(); i++){
                     tempRoom.Adjacent.push_back(stoi(tokens[i]));
                 }
                 Rooms.push_back(tempRoom);
@@ -93,6 +76,8 @@ int main () {
             }
         }
     }
-    cout << ">>>Problema Almacenado<<<" << endl;
+    cout << ">>>Instancia Almacenado<<<" << endl;
+    Instancia.close();
+    
     return 0;
 }
