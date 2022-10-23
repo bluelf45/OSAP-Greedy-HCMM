@@ -78,6 +78,20 @@ int main () {
     }
     cout << ">>>Instancia Almacenado<<<" << endl;
     Instancia.close();
+    Solution Output;
+    for (int i =0; i < Cantidades[1]; i++){
+        for (int j =0; j < Cantidades[0]; j++){
+            Output.Decision[i][j] = 0;
+        }       
+    }
+    //Funcion Miope -> siguiente Entidad en ID
+    //Punto Partida -> Entidad con ID 0
+    //Funcion de Evaluacion -> Cumplir Restriccion Fuerte
+    //Cumpliendo siempre ALL_ALLOCATED
+    for (int i = 0; i < Cantidades[0]; i++){
+        
+    }
     
+
     return 0;
 }

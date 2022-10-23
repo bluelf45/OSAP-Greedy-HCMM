@@ -32,21 +32,21 @@ bool No_Allocation(Solution Sol, Entidad E, Room R){
         return false;
     }
 }
-void Dif_Rooms(Solution Sol, Entidad E1, Entidad E2, Room R){
+bool Dif_Rooms(Solution Sol, Entidad E1, Entidad E2, Room R){
     if((Sol.Decision[R.id][E1.id] == 1 && Sol.Decision[R.id][E2.id] != 1) || (Sol.Decision[R.id][E1.id] != 1 && Sol.Decision[R.id][E2.id] == 1)){
         return true;
     }else{
         return false;
     }
 }
-void Same_Rooms(Solution Sol, Entidad E1, Entidad E2, Room R){
+bool Same_Rooms(Solution Sol, Entidad E1, Entidad E2, Room R){
     if(Sol.Decision[R.id][E1.id] == 1 && Sol.Decision[R.id][E2.id] == 1){
         return true;
     }else{
         return false;
     }
 }
-void Not_Sharing(Solution Sol, Entidad E, Room R, int Entities){
+bool Not_Sharing(Solution Sol, Entidad E, Room R, int Entities){
     int suma = 0;
     for (int i = 0 ; i < Entities ; i++){
         suma += Sol.Decision[R.id][i];
@@ -57,7 +57,26 @@ void Not_Sharing(Solution Sol, Entidad E, Room R, int Entities){
         return false;
     }
 }
-//void Adjacnecy();
+
+//R1 Habitacion entidad 1/R2 Habitacion Entidad 2
+bool Adjacency(Solution Sol,Room R1, Room R2){
+    for (int i = 0; i<R2.size(); i++){
+        if (R1.id == R2.Adjacent[i]{
+            return true
+        })
+    }
+    return false;
+}
 //void Nearby();
 //void AwayFrom();
-//void Capacity();
+void Capacity(Solution Sol, Room R1, vector<Entidad> Entidades){
+    int sum;
+    for (int i = 0; i < ; i++){
+        sum+= Sol[R1.id][i] * Entidades[i].space;
+    }
+    if(sum > R1.capacity){
+        return false;
+    }else{
+        return true;
+    }
+}
