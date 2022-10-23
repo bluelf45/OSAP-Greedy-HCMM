@@ -24,15 +24,18 @@ struct Constraint{//Struct para guardar Informacion de Restricciones
 };
 struct Solution{
     vector<vector<int>> Decision;//Rooms x Entities
+    vector<int> NonUsedSpace; //Espacio no utilizado por habitacion, ordenado segun id
+    vector<int> OverUsedSpace;//Espacio Sobre utilizado por habitacion, ordenado segun id
+    vector<int> nEh; //Numero Entidades en habitacion indice
 }
 
 bool All_Allocated(Solution Sol, int E, int R);//Todas las entidades Asignadas
 bool Allocation(Solution Sol, Entidad E, Room R);
 bool No_Allocation(Solution Sol, Entidad E, Room R);
-void Dif_Rooms(Solution Sol, Entidad E1, Entidad E2, Room R);
-void Same_Rooms(Solution Sol, Entidad E1, Entidad E2, Room R):
-void Not_Sharing(Solution Sol, Entidad E, Room R, int Entities);
-void Adjacnecy();
+bool Dif_Rooms(Solution Sol, Entidad E1, Entidad E2, Room R);
+bool Same_Rooms(Solution Sol, Entidad E1, Entidad E2, Room R):
+bool Not_Sharing(Solution Sol, Entidad E, Room R, int Entities);
+void Adjacency();
 void Nearby();
 void AwayFrom();
 void Capacity();
