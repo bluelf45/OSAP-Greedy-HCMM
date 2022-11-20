@@ -5,3 +5,4 @@ para correr el codigo solo hay que correr el Makefile usando "make run". Esto fu
 En caso de querer cambiar el archivo de la instancia solo hay que cambiar el nombre de la Instancia en main.cpp linea 39, es solamente cambiarlo al nombre del texto sin el .txt.
 en caso de querer usar Instancias fuera de Entregadas, estas se tendrian que agregar a la Carpeta Instancias/Instancias_OSAP.
 o especificar en main.cpp Linea 38 la ubicacion del archivo.
+OSCAR PORFAVOR TERMINA HILL CLIMBING EN EL LATEX Y LUEGO CREA LA ULTIMA SECCION PORFAVOR DEJA DE PROCRASTINAR.
