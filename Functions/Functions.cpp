@@ -193,7 +193,7 @@ int Penalizacion(vector<Constraint> Cons, Solution Sol, vector<Room> Rooms) {
         }
         suma += (ConsPen(Cons[i].Type) * N);
     }
-    return suma;
+    return abs(suma);
 }
 
 //Seleccionar la mejor habitacion segun la menor penalizacion que conlleva el seleccionar tal habitacion
@@ -216,6 +216,7 @@ int BestLocalRoom(vector<Constraint> Restricciones, Solution Solucion, vector<Ro
                 BestRoom = i;
             }
         }
+        Solucion.SpaceXRoom[Rooms[i].id] += Ent.space;
     }
     return BestRoom;
 }

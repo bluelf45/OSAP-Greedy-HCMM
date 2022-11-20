@@ -1,27 +1,57 @@
 #include "HCMM.h"
+#include "Functions.h"
 #include <bits/stdc++.h> // importa todo
 using namespace std ;
-int Mejor(int Sn, int Sc){
-    return 1;
+int Mejor(Solution Sn, Solution Sa, vector<Room> Rooms, vector<Constraint> Restricciones){
+    int Nn = Penalizacion(Restricciones, Sn, Rooms);
+    int Na = Penalizacion(Restricciones, Sa, Rooms);
+    if(Nn <= Na){
+        return -2;
+    }
+    if( Nn == -1){
+        return -1;
+    }
+    //En caso de que las restricciones duras se cumplan y la penalizacion sea menor que el minimo anterior, se asignara la nueva penalizacion
+    if(Nn > Na){
+        return Nn;
+    }
+    return -1;
 }
-int Random(Solution Solucion){
-    srand(time(0));
-    return rand(int(Solucion.Decision.size()));
+//Solucion->Desicion ->[RoomEnt0, RoomEnt1, ...., RoomEntN]
+vector<Solution> GenerarVecindario(Solution Solucion, vector<Entidad> Entidades, vector<Room> Rooms){
+    //SWAP
+    vector<Solution> Vecindario;
+    //Tal vez randomizar?
+    for (int i =0; i < int(Entidades.size())/2; i++){
+        //Guardar informacion para programar mas facil
+        Solution temp = Solucion;
+        int Entidad1 = i;
+        int Entidad2 = i+1;
+        int aux1 = temp.Decision[Entidad1];//ID habitacion [i]
+        int aux2 = temp.Decision[Entidad2];//ID habitacion [i + 1]
+        //Realizar el swap
+        temp.SpaceXRoom[aux1] += Entidades[Entidad1].space;
+        temp.SpaceXRoom[aux2] += Entidades[Entidad2].space;
+        temp.Decision[Entidad1] = aux2;
+        temp.Decision[Entidad2] = aux1;
+        temp.SpaceXRoom[aux2] -= Entidades[Entidad1].space;
+        temp.SpaceXRoom[aux1] -= Entidades[Entidad2].space;
+
+        Vecindario.push_back(temp);
+    }
+    return Vecindario;
 }
-int BestQualityPoint(int Sc){
-    return 1;
-}
-int HillClimbing(Solution Solucion){
-    bool local = false;
-    int Sc = Random(Solucion);
-    while(!local){
-        Sn = BestQualityPoint(Sc);
-        if(Mejor(Sn, Sc)){
-            Sc = Sn;
-        }
-        else{
-            local = true;
+Solution BestNeighbour(Solution Sa, vector<Entidad> Entidades, vector<Room> Rooms, vector<Constraint> Restricciones){
+    //Generar Vecindario
+    vector<Solution> Vecindario;
+    Vecindario = GenerarVecindario(Sa, Entidades, Rooms);
+    //Buscar Mejor solucion.
+    Solution BestSolution = Vecindario[0];
+    for(int i = 1; i<int(Vecindario.size()); i++){
+        int N = Mejor(Vecindario[i], BestSolution, Rooms, Restricciones);
+        if(N > -1){
+            BestSolution = Vecindario[i];
         }
     }
-    return Sc;
+    return BestSolution;
 }

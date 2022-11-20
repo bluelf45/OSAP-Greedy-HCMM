@@ -1,6 +1,6 @@
 #include <bits/stdc++.h> // importa todo
 #include "Functions/Functions.h"
-#include <algorithm>
+#include "Functions/HCMM.h"
 using namespace std ;
 
 bool FLAG(Solution Sol){
@@ -142,15 +142,26 @@ int main () {
             Output.SpaceXRoom[R] -= Entidades[i].space;
         }
     }
-    //Calcular el tiempo de ejecucion
-    time(&end);
-    double time_taken = double(end - start);
-    cout << "Tiempo de Ejecucion: " << fixed
-         << time_taken << setprecision(5);
-    cout << " segundos " << endl; 
     cout << ">>>Solucion Inicial Creada<<<" << endl;
     //volver a ordenar las entidades por orden de ID
     sort(Entidades.begin(), Entidades.end(), CompareById);
+    //Aplicar Hill Climbing
+    cout << ">>>Inicio de Hill Climbing<<<"<<endl;
+    Solution Sa = Output;
+    bool local = true;
+    while(local){//output == Sa | Sn == solucion nueva
+        //Generar vecindario
+        Solution Sn = BestNeighbour(Sa, Entidades, Rooms, Constraints);
+        //Ver si el mejor del vecindario es mejor que la solucion actual
+        int N = Mejor(Sn, Sa, Rooms, Constraints);
+        //en caso de serlo remplazar solucion actual
+        if(N > -1){
+            Sa = Sn;
+        }else if(N==-2){//En caso de que la mejor solucion nueva sea peor o igual que la actual se corta el ciclo
+            local = false;
+        }
+        //siguiente ciclo
+    }
     //Encontrar Restricciones blandas que no se cumplieron
     for(int i = 0; i < int(Constraints.size()); i++){
         if(Constraints[i].Soft_Hard == 0){
@@ -185,7 +196,12 @@ int main () {
         OUTPUT << endl;
     }
     OUTPUT.close();
-    //HILL CLIMBING *PROXIMAMENTE*
+    //Calcular el tiempo de ejecucion
+    time(&end);
+    double time_taken = double(end - start);
+    cout << "Tiempo de Ejecucion: " << fixed
+         << time_taken << setprecision(5);
+    cout << " segundos " << endl; 
     return 0;
 }
 

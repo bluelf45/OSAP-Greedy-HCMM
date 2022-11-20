@@ -1,15 +1,14 @@
-#ifndef FUNCTION_H
-#define FUNCTION_H
+#ifndef HCMM_H
+#define HCMM_H
 
 #include <bits/stdc++.h> 
+#include "Functions.h"
 using namespace std ;
 
-int Mejor(int Sn, int Sc);
+int Mejor(Solution Sn, Solution Sa, vector<Room> Rooms, vector<Constraint> Restricciones);
 
-int Random(Solution Solucion);
+vector<Solution> GenerarVecindario(Solution Solucion, vector<Entidad> Entidades, vector<Room> Rooms);
 
-int BestQualityPoint(int Sc);
-
-int HillClimbing(Solution Solucion);
+Solution BestNeighbour(Solution Sa, vector<Entidad> Entidades, vector<Room> Rooms, vector<Constraint> Restricciones);
 
 #endif
