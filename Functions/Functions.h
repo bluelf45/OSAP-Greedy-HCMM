@@ -7,12 +7,12 @@ using namespace std ;
 struct Entidad{//Struct para guardar Informacion de Entidades
     int id;
     int group_id;
-    int space;
+    float space;
 };
 struct Room{//Struct para guardar Informacion de Habitaciones
     int id;
     int floor;
-    int capacity;
+    float capacity;
     int tam_LA;
     vector<int> Adjacent;
 };
@@ -26,7 +26,7 @@ struct Constraint{//Struct para guardar Informacion de Restricciones
 };
 struct Solution{//Struct de la Solucion
     vector<int>Decision;//Entidad es la id, valor es la id de la habitacion
-    vector<int>SpaceXRoom; //Espacio Usado en cada Habitacion
+    vector<float>SpaceXRoom; //Espacio Usado en cada Habitacion
     vector<int>BadSoftCons;
 };
 
@@ -58,4 +58,5 @@ int Penalizacion(vector<Constraint> Restricciones, Solution Sol, vector<Room> Ro
 
 int BestLocalRoom(vector<Constraint> Restricciones, Solution Solucion, vector<Room> Rooms, Entidad Ent);
 
+float UsagePenalty(Solution Solucion);
 #endif

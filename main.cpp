@@ -16,15 +16,16 @@ bool CompareById(const Entidad &a, const Entidad &b)
     return a.id < b.id;
 }
 tuple<int, int> BadUsedSpace(Solution Sol){
-    int NU = 0;
-    int SU = 0;
+    float NU = 0;
+    float SU = 0;
     for(int i =0; i<int(Sol.SpaceXRoom.size()); i++){
-        if (Sol.BadSoftCons[i] > 0){
-            NU += Sol.BadSoftCons[i];
+        if (Sol.SpaceXRoom[i] >= 0){
+            NU += Sol.SpaceXRoom[i];
         }else{
-            SU += Sol.BadSoftCons[i];
+            SU += Sol.SpaceXRoom[i];
         }
     }
+    cout <<NU << " " << SU<<endl;
     return make_tuple(NU, SU);
 }
 
@@ -36,7 +37,7 @@ int main () {
     //Apertura del texto de Instancia con los datos
     fstream Instancia;//Archivo Instancia
     string PATH = "Instancias/Instancias_OSAP/";//Path a la carpeta con las Instancias
-    string NombreInstancia = "nott1";//Nombre del txt de las instancias
+    string NombreInstancia = "nott1d";//Nombre del txt de las instancias
     Instancia.open(PATH+NombreInstancia + ".txt", ios::in);//Apertura de Instancia
     if(Instancia.is_open()){
         cout << ">>>Instancia Abierta<<<\n";
@@ -78,7 +79,7 @@ int main () {
                 }else{
                     temp.id = stoi(tokens[0]);
                     temp.group_id = stoi(tokens[1]);
-                    temp.space = stoi(tokens[2]);
+                    temp.space = stof(tokens[2]);
                     Entidades.push_back(temp);
                 }
             }else if (Type == 2) {
@@ -88,7 +89,7 @@ int main () {
                 }else{
                     tempRoom.id = stoi(tokens[0]);
                     tempRoom.floor = stoi(tokens[1]);
-                    tempRoom.capacity = stoi(tokens[2]);
+                    tempRoom.capacity = stof(tokens[2]);
                     tempRoom.tam_LA = stoi(tokens[3]);
                 }
                 for( long unsigned int i = 4; i < tokens.size(); i++){
@@ -153,7 +154,7 @@ int main () {
         //Generar vecindario
         Solution Sn = BestNeighbour(Sa, Entidades, Rooms, Constraints);
         //Ver si el mejor del vecindario es mejor que la solucion actual
-        int N = Mejor(Sn, Sa, Rooms, Constraints);
+        float N = Mejor(Sn, Sa, Rooms, Constraints);
         //en caso de serlo remplazar solucion actual
         if(N > -1){
             Sa = Sn;
@@ -177,7 +178,7 @@ int main () {
         OUTPUT << to_string(Output.BadSoftCons[i]) << " ";
     }
     OUTPUT << endl;
-    int NU, SU;
+    float NU, SU;
     tie(NU, SU) = BadUsedSpace(Output);
     OUTPUT << to_string(NU - SU)<< " " << to_string(NU) << " " <<  to_string(SU) <<endl;
     for(int i = 0; i < int(Rooms.size()) - 1; i++){

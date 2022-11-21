@@ -200,12 +200,12 @@ int Penalizacion(vector<Constraint> Cons, Solution Sol, vector<Room> Rooms) {
 int BestLocalRoom(vector<Constraint> Restricciones, Solution Solucion, vector<Room> Rooms, Entidad Ent){//Buscar Habitacion con menos penalizacion
     int Minimo = 3000000;
     int BestRoom;
-    int N;
+    float N;
     for(int i = 0; i< int(Rooms.size()); i++){
         //Instanciar Habitacion para probar las restricciones
         Solucion.Decision[Ent.id] = Rooms[i].id;
         Solucion.SpaceXRoom[Rooms[i].id] -= Ent.space;
-        N = Penalizacion(Restricciones, Solucion, Rooms);
+        N = Penalizacion(Restricciones, Solucion, Rooms) + UsagePenalty(Solucion);
         if( N == -1){
             return -1;
         }
@@ -219,4 +219,19 @@ int BestLocalRoom(vector<Constraint> Restricciones, Solution Solucion, vector<Ro
         Solucion.SpaceXRoom[Rooms[i].id] += Ent.space;
     }
     return BestRoom;
+}
+
+float UsagePenalty(Solution Solucion){
+    float Underuse = 0;
+    float Overuse = 0;
+    for(int i =0; i < int(Solucion.SpaceXRoom.size()); i++){
+        float Use = Solucion.SpaceXRoom[i];
+        if (Use <=0){
+            Underuse += abs(Use);
+        }else{
+            Overuse += abs(Use);
+        }
+    }
+    float Penalty = Underuse + (2*Overuse);
+    return Penalty;
 }

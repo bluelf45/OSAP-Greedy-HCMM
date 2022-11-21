@@ -3,8 +3,8 @@
 #include <bits/stdc++.h> // importa todo
 using namespace std ;
 int Mejor(Solution Sn, Solution Sa, vector<Room> Rooms, vector<Constraint> Restricciones){
-    int Nn = Penalizacion(Restricciones, Sn, Rooms);
-    int Na = Penalizacion(Restricciones, Sa, Rooms);
+    float Nn = Penalizacion(Restricciones, Sn, Rooms) + UsagePenalty(Sn);
+    float Na = Penalizacion(Restricciones, Sa, Rooms) + UsagePenalty(Sa);
     if(Nn <= Na){
         return -2;
     }
